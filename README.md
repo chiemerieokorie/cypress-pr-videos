@@ -56,64 +56,21 @@ Before using this action, ensure:
     r2-bucket: ci-artifacts
 ```
 
-### Complete workflow example (monorepo)
+### Monorepo example
 
-For monorepos or complex setups, here's a complete working example:
+For monorepos, adjust `video-dir` and `spec-pattern` to match your project structure:
 
 ```yaml
-name: E2E Tests
-
-on:
-  pull_request:
-    branches: [main]
-
-jobs:
-  cypress:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      # Required when using install: false with cypress-io/github-action
-      - name: Install Cypress binary
-        run: pnpm exec cypress install
-        working-directory: apps/web  # Adjust for your project structure
-
-      - name: Run Cypress tests
-        uses: cypress-io/github-action@v6
-        with:
-          install: false  # Already installed above
-          working-directory: apps/web
-          start: npm run dev
-          wait-on: http://localhost:3000
-          browser: chrome
-
-      - name: Post PR test videos
-        if: success() && github.event_name == 'pull_request'
-        uses: chiemerieokorie/cypress-pr-videos@v1
-        with:
-          r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
-          r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
-          r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          r2-bucket: ${{ secrets.R2_BUCKET }}
-          video-dir: apps/web/cypress/videos  # Adjust for your project
-          spec-pattern: 'apps/web/cypress/e2e/**/*.cy.{ts,js}'
+- name: Post PR test videos
+  if: always() && github.event_name == 'pull_request'
+  uses: chiemerieokorie/cypress-pr-videos@v1
+  with:
+    r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
+    r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
+    r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+    r2-bucket: ${{ secrets.R2_BUCKET }}
+    video-dir: apps/web/cypress/videos
+    spec-pattern: 'apps/web/cypress/e2e/**/*.cy.{ts,js}'
 ```
 
 ## Inputs
@@ -182,50 +139,6 @@ permissions:
    ```yaml
    spec-pattern: 'apps/web/cypress/e2e/**/*.cy.{ts,js}'
    ```
-
-### "Missing package manager lockfile" with cypress-io/github-action
-
-In monorepos, the lockfile is at the root, not in the working directory. Add `install: false` and install dependencies separately:
-
-```yaml
-- name: Install dependencies
-  run: pnpm install --frozen-lockfile
-
-- name: Install Cypress binary
-  run: pnpm exec cypress install
-  working-directory: apps/web
-
-- name: Run Cypress tests
-  uses: cypress-io/github-action@v6
-  with:
-    install: false
-    working-directory: apps/web
-```
-
-### "Cypress binary is missing"
-
-When using `install: false`, the Cypress binary must be installed explicitly:
-
-```yaml
-- name: Install Cypress binary
-  run: pnpm exec cypress install
-  working-directory: apps/web  # Run from workspace with Cypress dependency
-```
-
-### Tests fail due to uncaught application errors
-
-If your tests fail because Cypress catches application errors (like backend connection failures), add exception handling in `cypress/support/e2e.ts`:
-
-```ts
-Cypress.on('uncaught:exception', (err) => {
-  // Ignore known errors that don't affect test validity
-  const ignoredPatterns = ['CONVEX', 'Failed to load Stripe', 'Network Error'];
-  if (ignoredPatterns.some(pattern => err.message.includes(pattern))) {
-    return false;
-  }
-  return true;
-});
-```
 
 ## Development
 
