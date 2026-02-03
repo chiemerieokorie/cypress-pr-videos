@@ -18,17 +18,42 @@ function getDisplayName(specPath: string): string {
 export function buildCommentBody(
   header: string,
   results: UploadResult[],
-  expirySeconds: number
+  expirySeconds: number,
+  inlineVideos: boolean = true
 ): string {
   const expiryHours = Math.round(expirySeconds / 3600)
-  const rows = results
-    .map((r) => {
-      const specName = getDisplayName(r.spec)
-      return `| \`${specName}\` | [▶️ Watch](${r.url}) |`
-    })
-    .join('\n')
 
-  return `${COMMENT_MARKER}
+  if (inlineVideos) {
+    // Inline video format - displays videos directly in the comment
+    const videos = results
+      .map((r) => {
+        const specName = getDisplayName(r.spec)
+        // Use details/summary for collapsible sections with inline video
+        return `<details open>
+<summary><strong>${specName}</strong></summary>
+
+${r.url}
+
+</details>`
+      })
+      .join('\n\n')
+
+    return `${COMMENT_MARKER}
+${header}
+
+${videos}
+
+> Videos expire ${expiryHours} hours after upload.`
+  } else {
+    // Table format with links (original behavior)
+    const rows = results
+      .map((r) => {
+        const specName = getDisplayName(r.spec)
+        return `| \`${specName}\` | [▶️ Watch](${r.url}) |`
+      })
+      .join('\n')
+
+    return `${COMMENT_MARKER}
 ${header}
 
 | Spec | Video |
@@ -36,13 +61,15 @@ ${header}
 ${rows}
 
 > Videos expire ${expiryHours} hours after upload.`
+  }
 }
 
 export async function postOrUpdateComment(
   token: string,
   results: UploadResult[],
   header: string,
-  expirySeconds: number
+  expirySeconds: number,
+  inlineVideos: boolean = true
 ): Promise<void> {
   if (results.length === 0) return
 
@@ -55,7 +82,7 @@ export async function postOrUpdateComment(
     return
   }
 
-  const body = buildCommentBody(header, results, expirySeconds)
+  const body = buildCommentBody(header, results, expirySeconds, inlineVideos)
 
   try {
     // Search for existing comment, paginating through all comments

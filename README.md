@@ -43,6 +43,7 @@ suite.
 | `github-token`           | no       | `${{ github.token }}`                 | Token for PR comment API                |
 | `comment-header`         | no       | `### 🎬 Cypress Test Videos`          | Markdown header for the comment         |
 | `max-concurrent-uploads` | no       | `5`                                   | Parallel upload limit                   |
+| `inline-videos`          | no       | `true`                                | Display videos inline or as links       |
 
 ## Outputs
 
@@ -65,8 +66,23 @@ overwrite previous uploads for the same spec.
 ## Limitations
 
 - Fork PRs are skipped (the default `GITHUB_TOKEN` is read-only)
-- GitHub's CSP blocks inline `<video>` playback — links open in a new tab
 - Signed URLs expire after the configured lifetime (default 72h)
+
+## Inline Video Display
+
+By default (`inline-videos: true`), videos are displayed directly in PR comments
+using collapsible sections. Each video appears under its spec name and can be
+played without leaving the PR page.
+
+To use the original table format with links instead, set `inline-videos: false`:
+
+```yaml
+- name: Post test videos
+  uses: org/cypress-pr-videos@v1
+  with:
+    inline-videos: false
+    # ... other inputs
+```
 
 ## Development
 

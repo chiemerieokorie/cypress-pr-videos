@@ -57,6 +57,7 @@ describe('run', () => {
         'comment-header': '### Videos',
         'url-expiry-seconds': '259200',
         'max-concurrent-uploads': '5',
+        'inline-videos': 'true',
         'r2-account-id': 'acc-id',
         'r2-access-key-id': 'key-id',
         'r2-secret-access-key': 'secret',
@@ -143,7 +144,8 @@ describe('run', () => {
       'fake-token',
       results,
       '### Videos',
-      259200
+      259200,
+      true
     )
     expect(mockSetOutput).toHaveBeenCalledWith(
       'video-urls',
