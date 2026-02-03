@@ -1,9 +1,19 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import type { UploadResult } from './upload.js'
-import { specToRelativeName } from './upload.js'
 
 export const COMMENT_MARKER = '<!-- cypress-pr-videos -->'
+
+/**
+ * Extract a display-friendly name from a spec path.
+ * Uses the last 2-3 path segments to provide context without being too verbose.
+ */
+function getDisplayName(specPath: string): string {
+  const parts = specPath.split('/')
+  // Take last 2 segments, or all if fewer
+  const relevant = parts.slice(-2)
+  return relevant.join('/')
+}
 
 export function buildCommentBody(
   header: string,
@@ -13,7 +23,7 @@ export function buildCommentBody(
   const expiryHours = Math.round(expirySeconds / 3600)
   const rows = results
     .map((r) => {
-      const specName = specToRelativeName(r.spec)
+      const specName = getDisplayName(r.spec)
       return `| \`${specName}\` | [▶️ Watch](${r.url}) |`
     })
     .join('\n')
