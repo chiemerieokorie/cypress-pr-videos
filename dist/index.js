@@ -76341,15 +76341,38 @@ function getDisplayName(specPath) {
     const relevant = parts.slice(-2);
     return relevant.join('/');
 }
-function buildCommentBody(header, results, expirySeconds) {
+function buildCommentBody(header, results, expirySeconds, inlineVideos = true) {
     const expiryHours = Math.round(expirySeconds / 3600);
-    const rows = results
-        .map((r) => {
-        const specName = getDisplayName(r.spec);
-        return `| \`${specName}\` | [▶️ Watch](${r.url}) |`;
-    })
-        .join('\n');
-    return `${COMMENT_MARKER}
+    if (inlineVideos) {
+        // Inline video format - displays videos directly in the comment
+        const videos = results
+            .map((r) => {
+            const specName = getDisplayName(r.spec);
+            // Use details/summary for collapsible sections with inline video
+            return `<details open>
+<summary><strong>${specName}</strong></summary>
+
+${r.url}
+
+</details>`;
+        })
+            .join('\n\n');
+        return `${COMMENT_MARKER}
+${header}
+
+${videos}
+
+> Videos expire ${expiryHours} hours after upload.`;
+    }
+    else {
+        // Table format with links (original behavior)
+        const rows = results
+            .map((r) => {
+            const specName = getDisplayName(r.spec);
+            return `| \`${specName}\` | [▶️ Watch](${r.url}) |`;
+        })
+            .join('\n');
+        return `${COMMENT_MARKER}
 ${header}
 
 | Spec | Video |
@@ -76357,8 +76380,9 @@ ${header}
 ${rows}
 
 > Videos expire ${expiryHours} hours after upload.`;
+    }
 }
-async function postOrUpdateComment(token, results, header, expirySeconds) {
+async function postOrUpdateComment(token, results, header, expirySeconds, inlineVideos = true) {
     if (results.length === 0)
         return;
     const octokit = getOctokit(token);
@@ -76368,7 +76392,7 @@ async function postOrUpdateComment(token, results, header, expirySeconds) {
         coreExports.warning('No pull request context found. Skipping comment.');
         return;
     }
-    const body = buildCommentBody(header, results, expirySeconds);
+    const body = buildCommentBody(header, results, expirySeconds, inlineVideos);
     try {
         // Search for existing comment, paginating through all comments
         let existing;
@@ -76429,6 +76453,7 @@ async function run() {
         const commentHeader = coreExports.getInput('comment-header');
         const urlExpirySeconds = parseInt(coreExports.getInput('url-expiry-seconds'), 10);
         const maxConcurrent = parseInt(coreExports.getInput('max-concurrent-uploads'), 10);
+        const inlineVideos = coreExports.getInput('inline-videos') !== 'false';
         const r2Config = {
             accountId: coreExports.getInput('r2-account-id', { required: true }),
             accessKeyId: coreExports.getInput('r2-access-key-id', { required: true }),
@@ -76460,7 +76485,7 @@ async function run() {
             return;
         }
         // Step 3: Post or update PR comment
-        await postOrUpdateComment(token, results, commentHeader, urlExpirySeconds);
+        await postOrUpdateComment(token, results, commentHeader, urlExpirySeconds, inlineVideos);
         // Step 4: Set outputs
         coreExports.setOutput('video-urls', JSON.stringify(results));
         coreExports.setOutput('videos-uploaded', String(results.length));
