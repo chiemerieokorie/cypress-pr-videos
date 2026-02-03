@@ -1,0 +1,10 @@
+{
+  "pull_request": {
+    "number": 42,
+    "head": {
+      "repo": {
+        "fork": false
+      }
+    }
+  }
+}

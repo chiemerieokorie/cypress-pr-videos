@@ -1,0 +1,3 @@
+# undici decompression vulnerability - only present in devDependency (@github/local-action)
+# Not shipped in the bundled dist/index.js
+GHSA-g9mf-h72j-4rw9
