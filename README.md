@@ -6,27 +6,114 @@ Cloudflare R2 and posts a PR comment with signed playback URLs.
 ## How it works
 
 1. Detects which spec files were changed in the PR diff
-1. Matches those specs to video files in the Cypress videos directory
-1. Uploads matching videos to Cloudflare R2
-1. Posts (or updates) a single PR comment with signed, time-limited URLs
+2. Matches those specs to video files in the Cypress videos directory
+3. Uploads matching videos to Cloudflare R2
+4. Posts (or updates) a single PR comment with signed, time-limited URLs
 
 Only videos for specs touched in the PR are uploaded — not the entire test
 suite.
 
+## Prerequisites
+
+Before using this action, ensure:
+
+1. **Cypress video recording is enabled** in your `cypress.config.ts`:
+   ```ts
+   export default defineConfig({
+     e2e: {
+       video: true,
+     },
+   });
+   ```
+
+2. **Required permissions** are set on your job:
+   ```yaml
+   jobs:
+     e2e:
+       runs-on: ubuntu-latest
+       permissions:
+         contents: read
+         pull-requests: write  # Required for posting PR comments
+   ```
+
+3. **R2 secrets** are configured in your repository (see [R2 bucket setup](#r2-bucket-setup))
+
 ## Usage
+
+### Basic example
 
 ```yaml
 - name: Cypress run
   uses: cypress-io/github-action@v6
 
 - name: Post test videos
-  if: always()
-  uses: org/cypress-pr-videos@v1
+  if: always() && github.event_name == 'pull_request'
+  uses: chiemerieokorie/cypress-pr-videos@v1
   with:
     r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
     r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
     r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
     r2-bucket: ci-artifacts
+```
+
+### Complete workflow example (monorepo)
+
+For monorepos or complex setups, here's a complete working example:
+
+```yaml
+name: E2E Tests
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Required when using install: false with cypress-io/github-action
+      - name: Install Cypress binary
+        run: pnpm exec cypress install
+        working-directory: apps/web  # Adjust for your project structure
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          install: false  # Already installed above
+          working-directory: apps/web
+          start: npm run dev
+          wait-on: http://localhost:3000
+          browser: chrome
+
+      - name: Post PR test videos
+        if: success() && github.event_name == 'pull_request'
+        uses: chiemerieokorie/cypress-pr-videos@v1
+        with:
+          r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ secrets.R2_BUCKET }}
+          video-dir: apps/web/cypress/videos  # Adjust for your project
+          spec-pattern: 'apps/web/cypress/e2e/**/*.cy.{ts,js}'
 ```
 
 ## Inputs
@@ -67,6 +154,78 @@ overwrite previous uploads for the same spec.
 - Fork PRs are skipped (the default `GITHUB_TOKEN` is read-only)
 - GitHub's CSP blocks inline `<video>` playback — links open in a new tab
 - Signed URLs expire after the configured lifetime (default 72h)
+
+## Troubleshooting
+
+### "Resource not accessible by integration" error
+
+The action can't post PR comments. Add the required permission to your job:
+
+```yaml
+permissions:
+  pull-requests: write
+```
+
+### No videos are uploaded
+
+1. **Check that video recording is enabled** in `cypress.config.ts`:
+   ```ts
+   video: true
+   ```
+
+2. **Verify the `video-dir` path** matches your project structure. For monorepos:
+   ```yaml
+   video-dir: apps/web/cypress/videos
+   ```
+
+3. **Check the `spec-pattern`** matches your spec file paths. For monorepos:
+   ```yaml
+   spec-pattern: 'apps/web/cypress/e2e/**/*.cy.{ts,js}'
+   ```
+
+### "Missing package manager lockfile" with cypress-io/github-action
+
+In monorepos, the lockfile is at the root, not in the working directory. Add `install: false` and install dependencies separately:
+
+```yaml
+- name: Install dependencies
+  run: pnpm install --frozen-lockfile
+
+- name: Install Cypress binary
+  run: pnpm exec cypress install
+  working-directory: apps/web
+
+- name: Run Cypress tests
+  uses: cypress-io/github-action@v6
+  with:
+    install: false
+    working-directory: apps/web
+```
+
+### "Cypress binary is missing"
+
+When using `install: false`, the Cypress binary must be installed explicitly:
+
+```yaml
+- name: Install Cypress binary
+  run: pnpm exec cypress install
+  working-directory: apps/web  # Run from workspace with Cypress dependency
+```
+
+### Tests fail due to uncaught application errors
+
+If your tests fail because Cypress catches application errors (like backend connection failures), add exception handling in `cypress/support/e2e.ts`:
+
+```ts
+Cypress.on('uncaught:exception', (err) => {
+  // Ignore known errors that don't affect test validity
+  const ignoredPatterns = ['CONVEX', 'Failed to load Stripe', 'Network Error'];
+  if (ignoredPatterns.some(pattern => err.message.includes(pattern))) {
+    return false;
+  }
+  return true;
+});
+```
 
 ## Development
 
