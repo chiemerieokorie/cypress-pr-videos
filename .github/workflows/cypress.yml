@@ -38,7 +38,7 @@ jobs:
           config: video=true
 
       - name: Upload Cypress Videos to R2
-        if: always()
+        if: success()
         uses: ./
         with:
           r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
