@@ -2,12 +2,12 @@ import require$$0, { EOL, homedir, platform as platform$1, release } from 'os';
 import crypto$1, { createHash, createHmac } from 'crypto';
 import * as fs from 'fs';
 import fs__default, { existsSync, readFileSync, promises } from 'fs';
-import * as require$$1 from 'path';
-import require$$1__default, { sep as sep$2, join } from 'path';
+import * as path$1 from 'path';
+import path__default, { sep as sep$2, join } from 'path';
 import require$$2, { Agent as Agent$1, request as request$6 } from 'http';
-import require$$1$1, { Agent, request as request$5 } from 'https';
+import require$$1, { Agent, request as request$5 } from 'https';
 import require$$0$3 from 'net';
-import require$$1$2 from 'tls';
+import require$$1$1 from 'tls';
 import require$$4 from 'events';
 import require$$0$2 from 'assert';
 import require$$0$1, { promisify } from 'util';
@@ -16,14 +16,14 @@ import require$$7, { Buffer as Buffer$1 } from 'buffer';
 import require$$8 from 'querystring';
 import require$$14 from 'stream/web';
 import require$$0$6, { Readable } from 'node:stream';
-import require$$1$3 from 'node:util';
+import require$$1$2 from 'node:util';
 import require$$0$5 from 'node:events';
 import require$$0$7 from 'worker_threads';
 import require$$2$1 from 'perf_hooks';
 import require$$5 from 'util/types';
 import require$$4$1 from 'async_hooks';
-import require$$1$4 from 'console';
-import require$$1$5, { parse as parse$3 } from 'url';
+import require$$1$3 from 'console';
+import require$$1$4, { parse as parse$3 } from 'url';
 import * as zlib from 'zlib';
 import zlib__default from 'zlib';
 import require$$6 from 'string_decoder';
@@ -37,14 +37,14 @@ import require$$0$9 from 'node:buffer';
 import require$$7$1 from 'node:querystring';
 import require$$0$c from 'node:diagnostics_channel';
 import require$$5$1 from 'node:tls';
-import require$$1$7 from 'node:zlib';
+import require$$1$6 from 'node:zlib';
 import require$$5$2 from 'node:perf_hooks';
 import require$$8$1 from 'node:util/types';
-import require$$1$6 from 'node:worker_threads';
-import require$$1$8 from 'node:url';
+import require$$1$5 from 'node:worker_threads';
+import require$$1$7 from 'node:url';
 import require$$5$3 from 'node:async_hooks';
-import require$$1$9 from 'node:console';
-import require$$1$a from 'node:dns';
+import require$$1$8 from 'node:console';
+import require$$1$9 from 'node:dns';
 import fs$1, { readFile as readFile$1 } from 'fs/promises';
 import { createHash as createHash$1, createPrivateKey, createPublicKey, sign } from 'node:crypto';
 import { ReadStream, lstatSync, fstatSync, promises as promises$1 } from 'node:fs';
@@ -397,9 +397,9 @@ var hasRequiredTunnel$1;
 function requireTunnel$1 () {
 	if (hasRequiredTunnel$1) return tunnel$1;
 	hasRequiredTunnel$1 = 1;
-	var tls = require$$1$2;
+	var tls = require$$1$1;
 	var http = require$$2;
-	var https = require$$1$1;
+	var https = require$$1;
 	var events = require$$4;
 	var util = require$$0$1;
 
@@ -1779,7 +1779,7 @@ function requireSbmh () {
 	 * by Hongli Lai at: https://github.com/FooBarWidget/boyer-moore-horspool
 	 */
 	const EventEmitter = require$$0$5.EventEmitter;
-	const inherits = require$$1$3.inherits;
+	const inherits = require$$1$2.inherits;
 
 	function SBMH (needle) {
 	  if (typeof needle === 'string') {
@@ -1988,7 +1988,7 @@ function requirePartStream () {
 	if (hasRequiredPartStream) return PartStream_1;
 	hasRequiredPartStream = 1;
 
-	const inherits = require$$1$3.inherits;
+	const inherits = require$$1$2.inherits;
 	const ReadableStream = require$$0$6.Readable;
 
 	function PartStream (opts) {
@@ -2034,7 +2034,7 @@ function requireHeaderParser () {
 	hasRequiredHeaderParser = 1;
 
 	const EventEmitter = require$$0$5.EventEmitter;
-	const inherits = require$$1$3.inherits;
+	const inherits = require$$1$2.inherits;
 	const getLimit = requireGetLimit();
 
 	const StreamSearch = requireSbmh();
@@ -2142,7 +2142,7 @@ function requireDicer () {
 	hasRequiredDicer = 1;
 
 	const WritableStream = require$$0$6.Writable;
-	const inherits = require$$1$3.inherits;
+	const inherits = require$$1$2.inherits;
 
 	const StreamSearch = requireSbmh();
 
@@ -2719,7 +2719,7 @@ function requireMultipart () {
 	//     -- this will require modifications to utils.parseParams
 
 	const { Readable } = require$$0$6;
-	const { inherits } = require$$1$3;
+	const { inherits } = require$$1$2;
 
 	const Dicer = requireDicer();
 
@@ -3285,7 +3285,7 @@ function requireMain () {
 	hasRequiredMain = 1;
 
 	const WritableStream = require$$0$6.Writable;
-	const { inherits } = require$$1$3;
+	const { inherits } = require$$1$2;
 	const Dicer = requireDicer();
 
 	const MultipartParser = requireMultipart();
@@ -8109,7 +8109,7 @@ function requireConnect$1 () {
 	    let socket;
 	    if (protocol === 'https:') {
 	      if (!tls) {
-	        tls = require$$1$2;
+	        tls = require$$1$1;
 	      }
 	      servername = servername || options.servername || util.getServerName(host) || null;
 
@@ -14133,7 +14133,7 @@ function requirePendingInterceptorsFormatter$1 () {
 	hasRequiredPendingInterceptorsFormatter$1 = 1;
 
 	const { Transform } = require$$0$4;
-	const { Console } = require$$1$4;
+	const { Console } = require$$1$3;
 
 	/**
 	 * Gets the output of `console.table(…)` as a string.
@@ -14360,7 +14360,7 @@ function requireProxyAgent$1 () {
 	hasRequiredProxyAgent$1 = 1;
 
 	const { kProxy, kClose, kDestroy, kInterceptors } = requireSymbols$9();
-	const { URL } = require$$1$5;
+	const { URL } = require$$1$4;
 	const Agent = requireAgent$1();
 	const Pool = requirePool$1();
 	const DispatcherBase = requireDispatcherBase$1();
@@ -24413,7 +24413,7 @@ function requireLib$1 () {
 	Object.defineProperty(lib$1, "__esModule", { value: true });
 	lib$1.HttpClient = lib$1.isHttps = lib$1.HttpClientResponse = lib$1.HttpClientError = lib$1.getProxyUrl = lib$1.MediaTypes = lib$1.Headers = lib$1.HttpCodes = void 0;
 	const http = __importStar(require$$2);
-	const https = __importStar(require$$1$1);
+	const https = __importStar(require$$1);
 	const pm = __importStar(requireProxy$1());
 	const tunnel = __importStar(requireTunnel());
 	const undici_1 = requireUndici$1();
@@ -25531,7 +25531,7 @@ function requirePathUtils () {
 	};
 	Object.defineProperty(pathUtils, "__esModule", { value: true });
 	pathUtils.toPlatformPath = pathUtils.toWin32Path = pathUtils.toPosixPath = void 0;
-	const path = __importStar(require$$1__default);
+	const path = __importStar(path__default);
 	/**
 	 * toPosixPath converts the given path to the posix form. On Windows, \\ will be
 	 * replaced with /.
@@ -25618,7 +25618,7 @@ function requireIoUtil () {
 		Object.defineProperty(exports$1, "__esModule", { value: true });
 		exports$1.getCmdPath = exports$1.tryGetExecutablePath = exports$1.isRooted = exports$1.isDirectory = exports$1.exists = exports$1.READONLY = exports$1.UV_FS_O_EXLOCK = exports$1.IS_WINDOWS = exports$1.unlink = exports$1.symlink = exports$1.stat = exports$1.rmdir = exports$1.rm = exports$1.rename = exports$1.readlink = exports$1.readdir = exports$1.open = exports$1.mkdir = exports$1.lstat = exports$1.copyFile = exports$1.chmod = void 0;
 		const fs = __importStar(fs__default);
-		const path = __importStar(require$$1__default);
+		const path = __importStar(path__default);
 		_a = fs.promises
 		// export const {open} = 'fs'
 		, exports$1.chmod = _a.chmod, exports$1.copyFile = _a.copyFile, exports$1.lstat = _a.lstat, exports$1.mkdir = _a.mkdir, exports$1.open = _a.open, exports$1.readdir = _a.readdir, exports$1.readlink = _a.readlink, exports$1.rename = _a.rename, exports$1.rm = _a.rm, exports$1.rmdir = _a.rmdir, exports$1.stat = _a.stat, exports$1.symlink = _a.symlink, exports$1.unlink = _a.unlink;
@@ -25808,7 +25808,7 @@ function requireIo () {
 	Object.defineProperty(io, "__esModule", { value: true });
 	io.findInPath = io.which = io.mkdirP = io.rmRF = io.mv = io.cp = void 0;
 	const assert_1 = require$$0$2;
-	const path = __importStar(require$$1__default);
+	const path = __importStar(path__default);
 	const ioUtil = __importStar(requireIoUtil());
 	/**
 	 * Copies a file or folder.
@@ -26116,7 +26116,7 @@ function requireToolrunner () {
 	const os = __importStar(require$$0);
 	const events = __importStar(require$$4);
 	const child = __importStar(require$$2$2);
-	const path = __importStar(require$$1__default);
+	const path = __importStar(path__default);
 	const io = __importStar(requireIo());
 	const ioUtil = __importStar(requireIoUtil());
 	const timers_1 = require$$6$1;
@@ -26960,7 +26960,7 @@ function requireCore () {
 		const file_command_1 = requireFileCommand();
 		const utils_1 = requireUtils$2();
 		const os = __importStar(require$$0);
-		const path = __importStar(require$$1__default);
+		const path = __importStar(path__default);
 		const oidc_utils_1 = requireOidcUtils();
 		/**
 		 * The code to exit an action
@@ -28217,7 +28217,7 @@ function requireUtil$7 () {
 	const stream = require$$0$6;
 	const net = require$$0$b;
 	const { Blob } = require$$0$9;
-	const nodeUtil = require$$1$3;
+	const nodeUtil = require$$1$2;
 	const { stringify } = require$$7$1;
 	const { EventEmitter: EE } = require$$0$5;
 	const { InvalidArgumentError } = requireErrors();
@@ -28938,7 +28938,7 @@ function requireDiagnostics () {
 	if (hasRequiredDiagnostics) return diagnostics;
 	hasRequiredDiagnostics = 1;
 	const diagnosticsChannel = require$$0$c;
-	const util = require$$1$3;
+	const util = require$$1$2;
 
 	const undiciDebugLog = util.debuglog('undici');
 	const fetchDebuglog = util.debuglog('fetch');
@@ -31766,8 +31766,8 @@ function requireWebidl () {
 	if (hasRequiredWebidl) return webidl_1;
 	hasRequiredWebidl = 1;
 
-	const { types, inspect } = require$$1$3;
-	const { markAsUncloneable } = require$$1$6;
+	const { types, inspect } = require$$1$2;
+	const { markAsUncloneable } = require$$1$5;
 	const { toUSVString } = requireUtil$7();
 
 	/** @type {import('../../../types/webidl').Webidl} */
@@ -32470,7 +32470,7 @@ function requireUtil$6 () {
 	hasRequiredUtil$6 = 1;
 
 	const { Transform } = require$$0$6;
-	const zlib = require$$1$7;
+	const zlib = require$$1$6;
 	const { redirectStatusSet, referrerPolicySet: referrerPolicyTokens, badPortsSet } = requireConstants$2();
 	const { getGlobalOrigin } = requireGlobal$1();
 	const { collectASequenceOfCodePoints, collectAnHTTPQuotedString, removeChars, parseMIMEType } = requireDataUrl();
@@ -34265,7 +34265,7 @@ function requireFormdata () {
 	const { FileLike, isFileLike } = requireFile();
 	const { webidl } = requireWebidl();
 	const { File: NativeFile } = require$$0$9;
-	const nodeUtil = require$$1$3;
+	const nodeUtil = require$$1$2;
 
 	/** @type {globalThis['File']} */
 	const File = globalThis.File ?? NativeFile;
@@ -39383,7 +39383,7 @@ function requireProxyAgent () {
 	hasRequiredProxyAgent = 1;
 
 	const { kProxy, kClose, kDestroy, kDispatch, kInterceptors } = requireSymbols$4();
-	const { URL } = require$$1$8;
+	const { URL } = require$$1$7;
 	const Agent = requireAgent();
 	const Pool = requirePool();
 	const DispatcherBase = requireDispatcherBase();
@@ -41855,7 +41855,7 @@ function requireMockUtils () {
 	  types: {
 	    isPromise
 	  }
-	} = require$$1$3;
+	} = require$$1$2;
 
 	function matchValue (match, value) {
 	  if (typeof match === 'string') {
@@ -42432,7 +42432,7 @@ function requireMockClient () {
 	if (hasRequiredMockClient) return mockClient;
 	hasRequiredMockClient = 1;
 
-	const { promisify } = require$$1$3;
+	const { promisify } = require$$1$2;
 	const Client = requireClient();
 	const { buildMockDispatch } = requireMockUtils();
 	const {
@@ -42499,7 +42499,7 @@ function requireMockPool () {
 	if (hasRequiredMockPool) return mockPool;
 	hasRequiredMockPool = 1;
 
-	const { promisify } = require$$1$3;
+	const { promisify } = require$$1$2;
 	const Pool = requirePool();
 	const { buildMockDispatch } = requireMockUtils();
 	const {
@@ -42604,7 +42604,7 @@ function requirePendingInterceptorsFormatter () {
 	hasRequiredPendingInterceptorsFormatter = 1;
 
 	const { Transform } = require$$0$6;
-	const { Console } = require$$1$9;
+	const { Console } = require$$1$8;
 
 	const PERSISTENT = process.versions.icu ? '✅' : 'Y ';
 	const NOT_PERSISTENT = process.versions.icu ? '❌' : 'N ';
@@ -43104,7 +43104,7 @@ function requireDns () {
 	if (hasRequiredDns) return dns;
 	hasRequiredDns = 1;
 	const { isIP } = require$$0$b;
-	const { lookup } = require$$1$a;
+	const { lookup } = require$$1$9;
 	const DecoratorHandler = requireDecoratorHandler();
 	const { InvalidArgumentError, InformationalError } = requireErrors();
 	const maxInt = Math.pow(2, 31) - 1;
@@ -43496,7 +43496,7 @@ function requireHeaders () {
 	} = requireUtil$6();
 	const { webidl } = requireWebidl();
 	const assert = require$$0$a;
-	const util = require$$1$3;
+	const util = require$$1$2;
 
 	const kHeadersMap = Symbol('headers map');
 	const kHeadersSortedMap = Symbol('headers map sorted');
@@ -44183,7 +44183,7 @@ function requireResponse () {
 	const { Headers, HeadersList, fill, getHeadersGuard, setHeadersGuard, setHeadersList } = requireHeaders();
 	const { extractBody, cloneBody, mixinBody, hasFinalizationRegistry, streamRegistry, bodyUnusable } = requireBody();
 	const util = requireUtil$7();
-	const nodeUtil = require$$1$3;
+	const nodeUtil = require$$1$2;
 	const { kEnumerableProperty } = util;
 	const {
 	  isValidReasonPhrase,
@@ -44205,7 +44205,7 @@ function requireResponse () {
 	const { URLSerializer } = requireDataUrl();
 	const { kConstruct } = requireSymbols$4();
 	const assert = require$$0$a;
-	const { types } = require$$1$3;
+	const { types } = require$$1$2;
 
 	const textEncoder = new TextEncoder('utf-8');
 
@@ -44858,7 +44858,7 @@ function requireRequest () {
 	const { Headers, fill: fillHeaders, HeadersList, setHeadersGuard, getHeadersGuard, setHeadersList, getHeadersList } = requireHeaders();
 	const { FinalizationRegistry } = requireDispatcherWeakref()();
 	const util = requireUtil$7();
-	const nodeUtil = require$$1$3;
+	const nodeUtil = require$$1$2;
 	const {
 	  isValidHTTPToken,
 	  sameOrigin,
@@ -45906,7 +45906,7 @@ function requireFetch () {
 	} = requireResponse();
 	const { HeadersList } = requireHeaders();
 	const { Request, cloneRequest } = requireRequest();
-	const zlib = require$$1$7;
+	const zlib = require$$1$6;
 	const {
 	  bytesMatch,
 	  makePolicyContainer,
@@ -48513,7 +48513,7 @@ function requireUtil$4 () {
 	const { ProgressEvent } = requireProgressevent();
 	const { getEncoding } = requireEncoding();
 	const { serializeAMimeType, parseMIMEType } = requireDataUrl();
-	const { types } = require$$1$3;
+	const { types } = require$$1$2;
 	const { StringDecoder } = require$$6;
 	const { btoa } = require$$0$9;
 
@@ -51177,7 +51177,7 @@ function requireEvents () {
 	const { webidl } = requireWebidl();
 	const { kEnumerableProperty } = requireUtil$7();
 	const { kConstruct } = requireSymbols$4();
-	const { MessagePort } = require$$1$6;
+	const { MessagePort } = require$$1$5;
 
 	/**
 	 * @see https://html.spec.whatwg.org/multipage/comms.html#messageevent
@@ -52407,7 +52407,7 @@ function requirePermessageDeflate () {
 	if (hasRequiredPermessageDeflate) return permessageDeflate;
 	hasRequiredPermessageDeflate = 1;
 
-	const { createInflateRaw, Z_DEFAULT_WINDOWBITS } = require$$1$7;
+	const { createInflateRaw, Z_DEFAULT_WINDOWBITS } = require$$1$6;
 	const { isValidClientWindowBits } = requireUtil$1();
 
 	const tail = Buffer.from([0x00, 0x00, 0xff, 0xff]);
@@ -53053,7 +53053,7 @@ function requireWebsocket () {
 	const { ByteParser } = requireReceiver();
 	const { kEnumerableProperty, isBlobLike } = requireUtil$7();
 	const { getGlobalDispatcher } = requireGlobal();
-	const { types } = require$$1$3;
+	const { types } = require$$1$2;
 	const { ErrorEvent, CloseEvent } = requireEvents();
 	const { SendQueue } = requireSender();
 
@@ -54786,7 +54786,7 @@ function requireLib () {
 	lib.getProxyUrl = getProxyUrl;
 	lib.isHttps = isHttps;
 	const http = __importStar(require$$2);
-	const https = __importStar(require$$1$1);
+	const https = __importStar(require$$1);
 	const pm = __importStar(requireProxy());
 	const tunnel = __importStar(requireTunnel());
 	const undici_1 = requireUndici();
@@ -76217,13 +76217,13 @@ function collectVideoFiles(videoDir) {
     }
     function walk(dir) {
         for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-            const fullPath = require$$1.join(dir, entry.name);
+            const fullPath = path$1.join(dir, entry.name);
             if (entry.isDirectory()) {
                 walk(fullPath);
             }
             else if (entry.name.endsWith('.mp4')) {
                 // Key: relative to videoDir, without .mp4 extension
-                const relative = require$$1.relative(videoDir, fullPath);
+                const relative = path$1.relative(videoDir, fullPath);
                 const specName = relative.slice(0, -4); // strip ".mp4"
                 videos.set(specName, fullPath);
             }
@@ -76233,28 +76233,35 @@ function collectVideoFiles(videoDir) {
     return videos;
 }
 /**
- * Given a spec path like "cypress/e2e/auth/login.cy.ts", extract the part
- * that Cypress uses for the video filename: "auth/login.cy.ts".
+ * Find a matching video for a spec path using suffix matching.
  *
- * Cypress strips the common ancestor of all spec files. In practice, this is
- * the specPattern root (e.g. "cypress/e2e/"). We try known roots, then fall
- * back to using just the basename segments.
+ * This approach is robust across different project structures (monorepos, custom layouts)
+ * because it doesn't rely on hardcoded path prefixes. Instead, it checks if the spec path
+ * ends with the video's spec name.
+ *
+ * Example:
+ *   Spec: "apps/web/cypress/e2e/auth/login.cy.ts"
+ *   Video map entry: "auth/login.cy.ts" → "cypress/videos/auth/login.cy.ts.mp4"
+ *   Match: spec ends with "/auth/login.cy.ts" ✓
+ *
+ * If multiple videos match, the longest (most specific) match wins.
  */
-function specToRelativeName(specPath) {
-    const knownRoots = [
-        'cypress/e2e/',
-        'cypress/integration/',
-        'src/',
-        'tests/',
-        'test/'
-    ];
-    for (const root of knownRoots) {
-        if (specPath.startsWith(root)) {
-            return specPath.slice(root.length);
+function findMatchingVideo(specPath, videoMap) {
+    let bestMatch = null;
+    let bestMatchLength = 0;
+    for (const [videoKey, videoPath] of videoMap) {
+        // Check if spec path ends with the video key (with proper path boundary)
+        if (specPath === videoKey ||
+            specPath.endsWith('/' + videoKey) ||
+            specPath.endsWith(path$1.sep + videoKey)) {
+            // Prefer the longest (most specific) match
+            if (videoKey.length > bestMatchLength) {
+                bestMatch = { videoKey, videoPath };
+                bestMatchLength = videoKey.length;
+            }
         }
     }
-    // Fallback: use the full path (Cypress may do this for non-standard layouts)
-    return specPath;
+    return bestMatch;
 }
 /**
  * Match changed spec files to video files on disk, upload matches to R2,
@@ -76269,19 +76276,20 @@ async function uploadVideos(specs, config) {
         return [];
     }
     coreExports.info(`Found ${videoMap.size} video file(s) in ${config.videoDir}`);
-    // Match specs to videos
+    // Match specs to videos using suffix matching
     const matched = [];
     for (const spec of specs) {
-        const relativeName = specToRelativeName(spec.path);
-        if (videoMap.has(relativeName)) {
+        const match = findMatchingVideo(spec.path, videoMap);
+        if (match) {
             matched.push({
                 spec,
-                videoPath: videoMap.get(relativeName),
-                videoKey: relativeName
+                videoPath: match.videoPath,
+                videoKey: match.videoKey
             });
         }
         else {
-            coreExports.warning(`No video found for ${spec.path} (looked for "${relativeName}" in ${config.videoDir})`);
+            const availableVideos = Array.from(videoMap.keys()).join(', ');
+            coreExports.warning(`No video found for ${spec.path}. Available videos: [${availableVideos}]`);
         }
     }
     if (matched.length === 0) {
@@ -76323,11 +76331,21 @@ async function runWithConcurrency(items, maxConcurrent, fn) {
 }
 
 const COMMENT_MARKER = '<!-- cypress-pr-videos -->';
+/**
+ * Extract a display-friendly name from a spec path.
+ * Uses the last 2-3 path segments to provide context without being too verbose.
+ */
+function getDisplayName(specPath) {
+    const parts = specPath.split('/');
+    // Take last 2 segments, or all if fewer
+    const relevant = parts.slice(-2);
+    return relevant.join('/');
+}
 function buildCommentBody(header, results, expirySeconds) {
     const expiryHours = Math.round(expirySeconds / 3600);
     const rows = results
         .map((r) => {
-        const specName = specToRelativeName(r.spec);
+        const specName = getDisplayName(r.spec);
         return `| \`${specName}\` | [▶️ Watch](${r.url}) |`;
     })
         .join('\n');
