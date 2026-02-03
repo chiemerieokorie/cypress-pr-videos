@@ -1,6 +1,6 @@
 {
-  "name": "typescript-action",
-  "description": "GitHub Actions TypeScript template",
+  "name": "cypress-pr-videos",
+  "description": "Upload Cypress test videos for changed specs to R2 and post PR comments",
   "version": "0.0.0",
   "author": "",
   "type": "module",
@@ -37,13 +37,18 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.11.1"
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^9.0.0",
+    "@aws-sdk/client-s3": "^3.981.0",
+    "@aws-sdk/s3-request-presigner": "^3.981.0",
+    "minimatch": "^10.1.1"
   },
   "devDependencies": {
     "@eslint/compat": "^1.4.0",
     "@github/local-action": "^6.0.2",
     "@jest/globals": "^30.2.0",
     "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-typescript": "^12.3.0",
     "@types/jest": "^30.0.0",

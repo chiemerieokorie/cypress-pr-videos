@@ -1,24 +1,57 @@
-name: The name of your action here
-description: Provide a description here
-author: Your name or organization here
+name: Cypress PR Videos
+description: >-
+  Upload Cypress test videos for changed spec files to Cloudflare R2
+  and post a PR comment with signed playback URLs.
+author: org
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: heart
-  color: red
+  icon: video
+  color: green
 
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: Your input description here
+  r2-account-id:
+    description: Cloudflare account ID
     required: true
-    default: '1000'
+  r2-access-key-id:
+    description: R2 API token key ID
+    required: true
+  r2-secret-access-key:
+    description: R2 API token secret
+    required: true
+  r2-bucket:
+    description: R2 bucket name
+    required: true
+  video-dir:
+    description: Path to Cypress video output
+    required: false
+    default: cypress/videos
+  spec-pattern:
+    description: Glob to identify spec files in the diff
+    required: false
+    default: 'cypress/e2e/**/*.cy.{ts,js,tsx,jsx}'
+  url-expiry-seconds:
+    description: Signed URL lifetime in seconds
+    required: false
+    default: '259200'
+  github-token:
+    description: Token for PR comment API
+    required: false
+    default: ${{ github.token }}
+  comment-header:
+    description: Markdown header for the comment
+    required: false
+    default: '### 🎬 Cypress Test Videos'
+  max-concurrent-uploads:
+    description: Parallel upload limit
+    required: false
+    default: '5'
 
-# Define your outputs here.
 outputs:
-  time:
-    description: Your output description here
+  video-urls:
+    description: JSON array of {spec, url} objects
+  videos-uploaded:
+    description: Count of videos uploaded
 
 runs:
-  using: node24
+  using: node20
   main: dist/index.js
