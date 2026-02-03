@@ -63,9 +63,7 @@ export async function postOrUpdateComment(
 
       if (comments.length === 0) break
 
-      existing = comments.find(
-        (c) => c.body?.includes(COMMENT_MARKER) ?? false
-      )
+      existing = comments.find((c) => c.body?.includes(COMMENT_MARKER) ?? false)
 
       if (comments.length < 100) break
       page++

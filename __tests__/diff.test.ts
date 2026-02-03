@@ -41,7 +41,10 @@ describe('getChangedSpecs', () => {
       ]
     })
 
-    const result = await getChangedSpecs('fake-token', 'cypress/e2e/**/*.cy.{ts,js,tsx,jsx}')
+    const result = await getChangedSpecs(
+      'fake-token',
+      'cypress/e2e/**/*.cy.{ts,js,tsx,jsx}'
+    )
 
     expect(result).toHaveLength(2)
     expect(result[0].path).toBe('cypress/e2e/auth/login.cy.ts')
@@ -58,7 +61,10 @@ describe('getChangedSpecs', () => {
       ]
     })
 
-    const result = await getChangedSpecs('fake-token', 'cypress/e2e/**/*.cy.{ts,js,tsx,jsx}')
+    const result = await getChangedSpecs(
+      'fake-token',
+      'cypress/e2e/**/*.cy.{ts,js,tsx,jsx}'
+    )
 
     expect(result).toHaveLength(1)
     expect(result[0].path).toBe('cypress/e2e/cart/checkout.cy.ts')
@@ -68,12 +74,13 @@ describe('getChangedSpecs', () => {
     const { getChangedSpecs } = await import('../src/diff.js')
 
     mockListFiles.mockResolvedValueOnce({
-      data: [
-        { filename: 'src/utils/helper.ts', status: 'modified' }
-      ]
+      data: [{ filename: 'src/utils/helper.ts', status: 'modified' }]
     })
 
-    const result = await getChangedSpecs('fake-token', 'cypress/e2e/**/*.cy.{ts,js,tsx,jsx}')
+    const result = await getChangedSpecs(
+      'fake-token',
+      'cypress/e2e/**/*.cy.{ts,js,tsx,jsx}'
+    )
 
     expect(result).toHaveLength(0)
   })

@@ -31,25 +31,25 @@ suite.
 
 ## Inputs
 
-| Input | Required | Default | Description |
-|---|---|---|---|
-| `r2-account-id` | yes | — | Cloudflare account ID |
-| `r2-access-key-id` | yes | — | R2 API token key ID |
-| `r2-secret-access-key` | yes | — | R2 API token secret |
-| `r2-bucket` | yes | — | R2 bucket name |
-| `video-dir` | no | `cypress/videos` | Path to Cypress video output |
-| `spec-pattern` | no | `cypress/e2e/**/*.cy.{ts,js,tsx,jsx}` | Glob to identify spec files in the diff |
-| `url-expiry-seconds` | no | `259200` (72h) | Signed URL lifetime |
-| `github-token` | no | `${{ github.token }}` | Token for PR comment API |
-| `comment-header` | no | `### 🎬 Cypress Test Videos` | Markdown header for the comment |
-| `max-concurrent-uploads` | no | `5` | Parallel upload limit |
+| Input                    | Required | Default                               | Description                             |
+| ------------------------ | -------- | ------------------------------------- | --------------------------------------- |
+| `r2-account-id`          | yes      | —                                     | Cloudflare account ID                   |
+| `r2-access-key-id`       | yes      | —                                     | R2 API token key ID                     |
+| `r2-secret-access-key`   | yes      | —                                     | R2 API token secret                     |
+| `r2-bucket`              | yes      | —                                     | R2 bucket name                          |
+| `video-dir`              | no       | `cypress/videos`                      | Path to Cypress video output            |
+| `spec-pattern`           | no       | `cypress/e2e/**/*.cy.{ts,js,tsx,jsx}` | Glob to identify spec files in the diff |
+| `url-expiry-seconds`     | no       | `259200` (72h)                        | Signed URL lifetime                     |
+| `github-token`           | no       | `${{ github.token }}`                 | Token for PR comment API                |
+| `comment-header`         | no       | `### 🎬 Cypress Test Videos`          | Markdown header for the comment         |
+| `max-concurrent-uploads` | no       | `5`                                   | Parallel upload limit                   |
 
 ## Outputs
 
-| Output | Description |
-|---|---|
-| `video-urls` | JSON array of `{spec, url}` objects |
-| `videos-uploaded` | Count of videos uploaded |
+| Output            | Description                         |
+| ----------------- | ----------------------------------- |
+| `video-urls`      | JSON array of `{spec, url}` objects |
+| `videos-uploaded` | Count of videos uploaded            |
 
 ## R2 bucket setup
 
@@ -59,8 +59,8 @@ suite.
 4. Store `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY` as
    org-level GitHub secrets
 
-Objects are stored at `cypress/{owner}/{repo}/pr-{number}/{spec}.mp4`.
-Re-runs overwrite previous uploads for the same spec.
+Objects are stored at `cypress/{owner}/{repo}/pr-{number}/{spec}.mp4`. Re-runs
+overwrite previous uploads for the same spec.
 
 ## Limitations
 

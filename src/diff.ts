@@ -52,13 +52,13 @@ export async function getChangedSpecs(
     page++
 
     if (page > 30) {
-      core.warning(
-        'PR diff exceeds 3000 files, proceeding with what we have.'
-      )
+      core.warning('PR diff exceeds 3000 files, proceeding with what we have.')
       break
     }
   }
 
-  core.info(`Found ${files.length} changed spec file(s) matching "${specPattern}"`)
+  core.info(
+    `Found ${files.length} changed spec file(s) matching "${specPattern}"`
+  )
   return files
 }

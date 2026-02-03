@@ -10,9 +10,8 @@ jest.unstable_mockModule('@actions/core', () => ({
 
 describe('buildCommentBody', () => {
   it('builds a markdown table with video links', async () => {
-    const { buildCommentBody, COMMENT_MARKER } = await import(
-      '../src/comment.js'
-    )
+    const { buildCommentBody, COMMENT_MARKER } =
+      await import('../src/comment.js')
 
     const results = [
       {
@@ -25,11 +24,7 @@ describe('buildCommentBody', () => {
       }
     ]
 
-    const body = buildCommentBody(
-      '### 🎬 Cypress Test Videos',
-      results,
-      259200
-    )
+    const body = buildCommentBody('### 🎬 Cypress Test Videos', results, 259200)
 
     expect(body).toContain(COMMENT_MARKER)
     expect(body).toContain('### 🎬 Cypress Test Videos')

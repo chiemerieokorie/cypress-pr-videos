@@ -79,9 +79,7 @@ describe('run', () => {
 
     await run()
 
-    expect(mockInfo).toHaveBeenCalledWith(
-      'Not a pull_request event. Skipping.'
-    )
+    expect(mockInfo).toHaveBeenCalledWith('Not a pull_request event. Skipping.')
     expect(mockGetChangedSpecs).not.toHaveBeenCalled()
   })
 
