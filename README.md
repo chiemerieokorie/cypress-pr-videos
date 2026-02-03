@@ -6,9 +6,9 @@ Cloudflare R2 and posts a PR comment with signed playback URLs.
 ## How it works
 
 1. Detects which spec files were changed in the PR diff
-2. Matches those specs to video files in the Cypress videos directory
-3. Uploads matching videos to Cloudflare R2
-4. Posts (or updates) a single PR comment with signed, time-limited URLs
+1. Matches those specs to video files in the Cypress videos directory
+1. Uploads matching videos to Cloudflare R2
+1. Posts (or updates) a single PR comment with signed, time-limited URLs
 
 Only videos for specs touched in the PR are uploaded — not the entire test
 suite.
@@ -54,9 +54,9 @@ suite.
 ## R2 bucket setup
 
 1. Create an R2 bucket (e.g. `ci-artifacts`) in Cloudflare
-2. Create an API token scoped to Object Read & Write on that bucket
-3. Set a lifecycle rule to delete objects older than 14 days
-4. Store `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY` as
+1. Create an API token scoped to Object Read & Write on that bucket
+1. Set a lifecycle rule to delete objects older than 14 days
+1. Store `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY` as
    org-level GitHub secrets
 
 Objects are stored at `cypress/{owner}/{repo}/pr-{number}/{spec}.mp4`. Re-runs
