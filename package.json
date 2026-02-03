@@ -1,20 +1,23 @@
 {
   "name": "cypress-pr-videos",
   "description": "Upload Cypress test videos for changed specs to R2 and post PR comments",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "",
   "type": "module",
   "private": true,
-  "homepage": "https://github.com/actions/typescript-action",
+  "homepage": "https://github.com/chiemerieokorie/cypress-pr-videos",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/chiemerieokorie/cypress-pr-videos.git"
   },
   "bugs": {
-    "url": "https://github.com/actions/typescript-action/issues"
+    "url": "https://github.com/chiemerieokorie/cypress-pr-videos/issues"
   },
   "keywords": [
-    "actions"
+    "actions",
+    "cypress",
+    "video",
+    "cloudflare-r2"
   ],
   "exports": {
     ".": "./dist/index.js"
