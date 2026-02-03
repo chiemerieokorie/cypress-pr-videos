@@ -1,13 +1,13 @@
 import require$$0, { EOL, homedir, platform as platform$1, release } from 'os';
 import crypto$1, { createHash, createHmac } from 'crypto';
-import * as require$$1 from 'fs';
-import require$$1__default, { existsSync, readFileSync, promises } from 'fs';
-import * as require$$1$1 from 'path';
-import require$$1__default$1, { sep as sep$2, join } from 'path';
+import * as fs from 'fs';
+import fs__default, { existsSync, readFileSync, promises } from 'fs';
+import * as require$$1 from 'path';
+import require$$1__default, { sep as sep$2, join } from 'path';
 import require$$2, { Agent as Agent$1, request as request$6 } from 'http';
-import require$$1$2, { Agent, request as request$5 } from 'https';
+import require$$1$1, { Agent, request as request$5 } from 'https';
 import require$$0$3 from 'net';
-import require$$1$3 from 'tls';
+import require$$1$2 from 'tls';
 import require$$4 from 'events';
 import require$$0$2 from 'assert';
 import require$$0$1, { promisify } from 'util';
@@ -16,14 +16,14 @@ import require$$7, { Buffer as Buffer$1 } from 'buffer';
 import require$$8 from 'querystring';
 import require$$14 from 'stream/web';
 import require$$0$6, { Readable } from 'node:stream';
-import require$$1$4 from 'node:util';
+import require$$1$3 from 'node:util';
 import require$$0$5 from 'node:events';
 import require$$0$7 from 'worker_threads';
 import require$$2$1 from 'perf_hooks';
 import require$$5 from 'util/types';
 import require$$4$1 from 'async_hooks';
-import require$$1$5 from 'console';
-import require$$1$6, { parse as parse$3 } from 'url';
+import require$$1$4 from 'console';
+import require$$1$5, { parse as parse$3 } from 'url';
 import * as zlib from 'zlib';
 import zlib__default from 'zlib';
 import require$$6 from 'string_decoder';
@@ -37,15 +37,15 @@ import require$$0$9 from 'node:buffer';
 import require$$7$1 from 'node:querystring';
 import require$$0$c from 'node:diagnostics_channel';
 import require$$5$1 from 'node:tls';
-import require$$1$8 from 'node:zlib';
+import require$$1$7 from 'node:zlib';
 import require$$5$2 from 'node:perf_hooks';
 import require$$8$1 from 'node:util/types';
-import require$$1$7 from 'node:worker_threads';
-import require$$1$9 from 'node:url';
+import require$$1$6 from 'node:worker_threads';
+import require$$1$8 from 'node:url';
 import require$$5$3 from 'node:async_hooks';
-import require$$1$a from 'node:console';
-import require$$1$b from 'node:dns';
-import fs, { readFile as readFile$1 } from 'fs/promises';
+import require$$1$9 from 'node:console';
+import require$$1$a from 'node:dns';
+import fs$1, { readFile as readFile$1 } from 'fs/promises';
 import { createHash as createHash$1, createPrivateKey, createPublicKey, sign } from 'node:crypto';
 import { ReadStream, lstatSync, fstatSync, promises as promises$1 } from 'node:fs';
 import { homedir as homedir$1 } from 'node:os';
@@ -247,7 +247,7 @@ function requireFileCommand () {
 	// We use any as a valid input type
 	/* eslint-disable @typescript-eslint/no-explicit-any */
 	const crypto = __importStar(crypto$1);
-	const fs = __importStar(require$$1__default);
+	const fs = __importStar(fs__default);
 	const os = __importStar(require$$0);
 	const utils_1 = requireUtils$2();
 	function issueFileCommand(command, message) {
@@ -397,9 +397,9 @@ var hasRequiredTunnel$1;
 function requireTunnel$1 () {
 	if (hasRequiredTunnel$1) return tunnel$1;
 	hasRequiredTunnel$1 = 1;
-	var tls = require$$1$3;
+	var tls = require$$1$2;
 	var http = require$$2;
-	var https = require$$1$2;
+	var https = require$$1$1;
 	var events = require$$4;
 	var util = require$$0$1;
 
@@ -1779,7 +1779,7 @@ function requireSbmh () {
 	 * by Hongli Lai at: https://github.com/FooBarWidget/boyer-moore-horspool
 	 */
 	const EventEmitter = require$$0$5.EventEmitter;
-	const inherits = require$$1$4.inherits;
+	const inherits = require$$1$3.inherits;
 
 	function SBMH (needle) {
 	  if (typeof needle === 'string') {
@@ -1988,7 +1988,7 @@ function requirePartStream () {
 	if (hasRequiredPartStream) return PartStream_1;
 	hasRequiredPartStream = 1;
 
-	const inherits = require$$1$4.inherits;
+	const inherits = require$$1$3.inherits;
 	const ReadableStream = require$$0$6.Readable;
 
 	function PartStream (opts) {
@@ -2034,7 +2034,7 @@ function requireHeaderParser () {
 	hasRequiredHeaderParser = 1;
 
 	const EventEmitter = require$$0$5.EventEmitter;
-	const inherits = require$$1$4.inherits;
+	const inherits = require$$1$3.inherits;
 	const getLimit = requireGetLimit();
 
 	const StreamSearch = requireSbmh();
@@ -2142,7 +2142,7 @@ function requireDicer () {
 	hasRequiredDicer = 1;
 
 	const WritableStream = require$$0$6.Writable;
-	const inherits = require$$1$4.inherits;
+	const inherits = require$$1$3.inherits;
 
 	const StreamSearch = requireSbmh();
 
@@ -2719,7 +2719,7 @@ function requireMultipart () {
 	//     -- this will require modifications to utils.parseParams
 
 	const { Readable } = require$$0$6;
-	const { inherits } = require$$1$4;
+	const { inherits } = require$$1$3;
 
 	const Dicer = requireDicer();
 
@@ -3285,7 +3285,7 @@ function requireMain () {
 	hasRequiredMain = 1;
 
 	const WritableStream = require$$0$6.Writable;
-	const { inherits } = require$$1$4;
+	const { inherits } = require$$1$3;
 	const Dicer = requireDicer();
 
 	const MultipartParser = requireMultipart();
@@ -8109,7 +8109,7 @@ function requireConnect$1 () {
 	    let socket;
 	    if (protocol === 'https:') {
 	      if (!tls) {
-	        tls = require$$1$3;
+	        tls = require$$1$2;
 	      }
 	      servername = servername || options.servername || util.getServerName(host) || null;
 
@@ -14133,7 +14133,7 @@ function requirePendingInterceptorsFormatter$1 () {
 	hasRequiredPendingInterceptorsFormatter$1 = 1;
 
 	const { Transform } = require$$0$4;
-	const { Console } = require$$1$5;
+	const { Console } = require$$1$4;
 
 	/**
 	 * Gets the output of `console.table(…)` as a string.
@@ -14360,7 +14360,7 @@ function requireProxyAgent$1 () {
 	hasRequiredProxyAgent$1 = 1;
 
 	const { kProxy, kClose, kDestroy, kInterceptors } = requireSymbols$9();
-	const { URL } = require$$1$6;
+	const { URL } = require$$1$5;
 	const Agent = requireAgent$1();
 	const Pool = requirePool$1();
 	const DispatcherBase = requireDispatcherBase$1();
@@ -24413,7 +24413,7 @@ function requireLib$1 () {
 	Object.defineProperty(lib$1, "__esModule", { value: true });
 	lib$1.HttpClient = lib$1.isHttps = lib$1.HttpClientResponse = lib$1.HttpClientError = lib$1.getProxyUrl = lib$1.MediaTypes = lib$1.Headers = lib$1.HttpCodes = void 0;
 	const http = __importStar(require$$2);
-	const https = __importStar(require$$1$2);
+	const https = __importStar(require$$1$1);
 	const pm = __importStar(requireProxy$1());
 	const tunnel = __importStar(requireTunnel());
 	const undici_1 = requireUndici$1();
@@ -25225,7 +25225,7 @@ function requireSummary () {
 		Object.defineProperty(exports$1, "__esModule", { value: true });
 		exports$1.summary = exports$1.markdownSummary = exports$1.SUMMARY_DOCS_URL = exports$1.SUMMARY_ENV_VAR = void 0;
 		const os_1 = require$$0;
-		const fs_1 = require$$1__default;
+		const fs_1 = fs__default;
 		const { access, appendFile, writeFile } = fs_1.promises;
 		exports$1.SUMMARY_ENV_VAR = 'GITHUB_STEP_SUMMARY';
 		exports$1.SUMMARY_DOCS_URL = 'https://docs.github.com/actions/using-workflows/workflow-commands-for-github-actions#adding-a-job-summary';
@@ -25531,7 +25531,7 @@ function requirePathUtils () {
 	};
 	Object.defineProperty(pathUtils, "__esModule", { value: true });
 	pathUtils.toPlatformPath = pathUtils.toWin32Path = pathUtils.toPosixPath = void 0;
-	const path = __importStar(require$$1__default$1);
+	const path = __importStar(require$$1__default);
 	/**
 	 * toPosixPath converts the given path to the posix form. On Windows, \\ will be
 	 * replaced with /.
@@ -25617,8 +25617,8 @@ function requireIoUtil () {
 		var _a;
 		Object.defineProperty(exports$1, "__esModule", { value: true });
 		exports$1.getCmdPath = exports$1.tryGetExecutablePath = exports$1.isRooted = exports$1.isDirectory = exports$1.exists = exports$1.READONLY = exports$1.UV_FS_O_EXLOCK = exports$1.IS_WINDOWS = exports$1.unlink = exports$1.symlink = exports$1.stat = exports$1.rmdir = exports$1.rm = exports$1.rename = exports$1.readlink = exports$1.readdir = exports$1.open = exports$1.mkdir = exports$1.lstat = exports$1.copyFile = exports$1.chmod = void 0;
-		const fs = __importStar(require$$1__default);
-		const path = __importStar(require$$1__default$1);
+		const fs = __importStar(fs__default);
+		const path = __importStar(require$$1__default);
 		_a = fs.promises
 		// export const {open} = 'fs'
 		, exports$1.chmod = _a.chmod, exports$1.copyFile = _a.copyFile, exports$1.lstat = _a.lstat, exports$1.mkdir = _a.mkdir, exports$1.open = _a.open, exports$1.readdir = _a.readdir, exports$1.readlink = _a.readlink, exports$1.rename = _a.rename, exports$1.rm = _a.rm, exports$1.rmdir = _a.rmdir, exports$1.stat = _a.stat, exports$1.symlink = _a.symlink, exports$1.unlink = _a.unlink;
@@ -25808,7 +25808,7 @@ function requireIo () {
 	Object.defineProperty(io, "__esModule", { value: true });
 	io.findInPath = io.which = io.mkdirP = io.rmRF = io.mv = io.cp = void 0;
 	const assert_1 = require$$0$2;
-	const path = __importStar(require$$1__default$1);
+	const path = __importStar(require$$1__default);
 	const ioUtil = __importStar(requireIoUtil());
 	/**
 	 * Copies a file or folder.
@@ -26116,7 +26116,7 @@ function requireToolrunner () {
 	const os = __importStar(require$$0);
 	const events = __importStar(require$$4);
 	const child = __importStar(require$$2$2);
-	const path = __importStar(require$$1__default$1);
+	const path = __importStar(require$$1__default);
 	const io = __importStar(requireIo());
 	const ioUtil = __importStar(requireIoUtil());
 	const timers_1 = require$$6$1;
@@ -26960,7 +26960,7 @@ function requireCore () {
 		const file_command_1 = requireFileCommand();
 		const utils_1 = requireUtils$2();
 		const os = __importStar(require$$0);
-		const path = __importStar(require$$1__default$1);
+		const path = __importStar(require$$1__default);
 		const oidc_utils_1 = requireOidcUtils();
 		/**
 		 * The code to exit an action
@@ -28217,7 +28217,7 @@ function requireUtil$7 () {
 	const stream = require$$0$6;
 	const net = require$$0$b;
 	const { Blob } = require$$0$9;
-	const nodeUtil = require$$1$4;
+	const nodeUtil = require$$1$3;
 	const { stringify } = require$$7$1;
 	const { EventEmitter: EE } = require$$0$5;
 	const { InvalidArgumentError } = requireErrors();
@@ -28938,7 +28938,7 @@ function requireDiagnostics () {
 	if (hasRequiredDiagnostics) return diagnostics;
 	hasRequiredDiagnostics = 1;
 	const diagnosticsChannel = require$$0$c;
-	const util = require$$1$4;
+	const util = require$$1$3;
 
 	const undiciDebugLog = util.debuglog('undici');
 	const fetchDebuglog = util.debuglog('fetch');
@@ -31766,8 +31766,8 @@ function requireWebidl () {
 	if (hasRequiredWebidl) return webidl_1;
 	hasRequiredWebidl = 1;
 
-	const { types, inspect } = require$$1$4;
-	const { markAsUncloneable } = require$$1$7;
+	const { types, inspect } = require$$1$3;
+	const { markAsUncloneable } = require$$1$6;
 	const { toUSVString } = requireUtil$7();
 
 	/** @type {import('../../../types/webidl').Webidl} */
@@ -32470,7 +32470,7 @@ function requireUtil$6 () {
 	hasRequiredUtil$6 = 1;
 
 	const { Transform } = require$$0$6;
-	const zlib = require$$1$8;
+	const zlib = require$$1$7;
 	const { redirectStatusSet, referrerPolicySet: referrerPolicyTokens, badPortsSet } = requireConstants$2();
 	const { getGlobalOrigin } = requireGlobal$1();
 	const { collectASequenceOfCodePoints, collectAnHTTPQuotedString, removeChars, parseMIMEType } = requireDataUrl();
@@ -34265,7 +34265,7 @@ function requireFormdata () {
 	const { FileLike, isFileLike } = requireFile();
 	const { webidl } = requireWebidl();
 	const { File: NativeFile } = require$$0$9;
-	const nodeUtil = require$$1$4;
+	const nodeUtil = require$$1$3;
 
 	/** @type {globalThis['File']} */
 	const File = globalThis.File ?? NativeFile;
@@ -39383,7 +39383,7 @@ function requireProxyAgent () {
 	hasRequiredProxyAgent = 1;
 
 	const { kProxy, kClose, kDestroy, kDispatch, kInterceptors } = requireSymbols$4();
-	const { URL } = require$$1$9;
+	const { URL } = require$$1$8;
 	const Agent = requireAgent();
 	const Pool = requirePool();
 	const DispatcherBase = requireDispatcherBase();
@@ -41855,7 +41855,7 @@ function requireMockUtils () {
 	  types: {
 	    isPromise
 	  }
-	} = require$$1$4;
+	} = require$$1$3;
 
 	function matchValue (match, value) {
 	  if (typeof match === 'string') {
@@ -42432,7 +42432,7 @@ function requireMockClient () {
 	if (hasRequiredMockClient) return mockClient;
 	hasRequiredMockClient = 1;
 
-	const { promisify } = require$$1$4;
+	const { promisify } = require$$1$3;
 	const Client = requireClient();
 	const { buildMockDispatch } = requireMockUtils();
 	const {
@@ -42499,7 +42499,7 @@ function requireMockPool () {
 	if (hasRequiredMockPool) return mockPool;
 	hasRequiredMockPool = 1;
 
-	const { promisify } = require$$1$4;
+	const { promisify } = require$$1$3;
 	const Pool = requirePool();
 	const { buildMockDispatch } = requireMockUtils();
 	const {
@@ -42604,7 +42604,7 @@ function requirePendingInterceptorsFormatter () {
 	hasRequiredPendingInterceptorsFormatter = 1;
 
 	const { Transform } = require$$0$6;
-	const { Console } = require$$1$a;
+	const { Console } = require$$1$9;
 
 	const PERSISTENT = process.versions.icu ? '✅' : 'Y ';
 	const NOT_PERSISTENT = process.versions.icu ? '❌' : 'N ';
@@ -43104,7 +43104,7 @@ function requireDns () {
 	if (hasRequiredDns) return dns;
 	hasRequiredDns = 1;
 	const { isIP } = require$$0$b;
-	const { lookup } = require$$1$b;
+	const { lookup } = require$$1$a;
 	const DecoratorHandler = requireDecoratorHandler();
 	const { InvalidArgumentError, InformationalError } = requireErrors();
 	const maxInt = Math.pow(2, 31) - 1;
@@ -43496,7 +43496,7 @@ function requireHeaders () {
 	} = requireUtil$6();
 	const { webidl } = requireWebidl();
 	const assert = require$$0$a;
-	const util = require$$1$4;
+	const util = require$$1$3;
 
 	const kHeadersMap = Symbol('headers map');
 	const kHeadersSortedMap = Symbol('headers map sorted');
@@ -44183,7 +44183,7 @@ function requireResponse () {
 	const { Headers, HeadersList, fill, getHeadersGuard, setHeadersGuard, setHeadersList } = requireHeaders();
 	const { extractBody, cloneBody, mixinBody, hasFinalizationRegistry, streamRegistry, bodyUnusable } = requireBody();
 	const util = requireUtil$7();
-	const nodeUtil = require$$1$4;
+	const nodeUtil = require$$1$3;
 	const { kEnumerableProperty } = util;
 	const {
 	  isValidReasonPhrase,
@@ -44205,7 +44205,7 @@ function requireResponse () {
 	const { URLSerializer } = requireDataUrl();
 	const { kConstruct } = requireSymbols$4();
 	const assert = require$$0$a;
-	const { types } = require$$1$4;
+	const { types } = require$$1$3;
 
 	const textEncoder = new TextEncoder('utf-8');
 
@@ -44858,7 +44858,7 @@ function requireRequest () {
 	const { Headers, fill: fillHeaders, HeadersList, setHeadersGuard, getHeadersGuard, setHeadersList, getHeadersList } = requireHeaders();
 	const { FinalizationRegistry } = requireDispatcherWeakref()();
 	const util = requireUtil$7();
-	const nodeUtil = require$$1$4;
+	const nodeUtil = require$$1$3;
 	const {
 	  isValidHTTPToken,
 	  sameOrigin,
@@ -45906,7 +45906,7 @@ function requireFetch () {
 	} = requireResponse();
 	const { HeadersList } = requireHeaders();
 	const { Request, cloneRequest } = requireRequest();
-	const zlib = require$$1$8;
+	const zlib = require$$1$7;
 	const {
 	  bytesMatch,
 	  makePolicyContainer,
@@ -48513,7 +48513,7 @@ function requireUtil$4 () {
 	const { ProgressEvent } = requireProgressevent();
 	const { getEncoding } = requireEncoding();
 	const { serializeAMimeType, parseMIMEType } = requireDataUrl();
-	const { types } = require$$1$4;
+	const { types } = require$$1$3;
 	const { StringDecoder } = require$$6;
 	const { btoa } = require$$0$9;
 
@@ -51177,7 +51177,7 @@ function requireEvents () {
 	const { webidl } = requireWebidl();
 	const { kEnumerableProperty } = requireUtil$7();
 	const { kConstruct } = requireSymbols$4();
-	const { MessagePort } = require$$1$7;
+	const { MessagePort } = require$$1$6;
 
 	/**
 	 * @see https://html.spec.whatwg.org/multipage/comms.html#messageevent
@@ -52407,7 +52407,7 @@ function requirePermessageDeflate () {
 	if (hasRequiredPermessageDeflate) return permessageDeflate;
 	hasRequiredPermessageDeflate = 1;
 
-	const { createInflateRaw, Z_DEFAULT_WINDOWBITS } = require$$1$8;
+	const { createInflateRaw, Z_DEFAULT_WINDOWBITS } = require$$1$7;
 	const { isValidClientWindowBits } = requireUtil$1();
 
 	const tail = Buffer.from([0x00, 0x00, 0xff, 0xff]);
@@ -53053,7 +53053,7 @@ function requireWebsocket () {
 	const { ByteParser } = requireReceiver();
 	const { kEnumerableProperty, isBlobLike } = requireUtil$7();
 	const { getGlobalDispatcher } = requireGlobal();
-	const { types } = require$$1$4;
+	const { types } = require$$1$3;
 	const { ErrorEvent, CloseEvent } = requireEvents();
 	const { SendQueue } = requireSender();
 
@@ -54786,7 +54786,7 @@ function requireLib () {
 	lib.getProxyUrl = getProxyUrl;
 	lib.isHttps = isHttps;
 	const http = __importStar(require$$2);
-	const https = __importStar(require$$1$2);
+	const https = __importStar(require$$1$1);
 	const pm = __importStar(requireProxy());
 	const tunnel = __importStar(requireTunnel());
 	const undici_1 = requireUndici();
@@ -76203,69 +76203,94 @@ function createS3Client(config) {
     });
 }
 /**
- * Derive the spec root from the spec-pattern default or the spec path itself.
- * For "cypress/e2e/auth/login.cy.ts" the spec root is "cypress/e2e/".
- * We strip this prefix to get the relative path for the video directory.
+ * Walk the video directory and collect all .mp4 files as relative paths.
+ * Returns a map from the spec-derived name (path without .mp4) to the full path.
+ *
+ * For example, if videoDir is "cypress/videos" and contains "auth/login.cy.ts.mp4",
+ * the map entry is: "auth/login.cy.ts" → "cypress/videos/auth/login.cy.ts.mp4"
  */
-function specToVideoPath(specPath, videoDir) {
-    // Find the common spec root: everything up to and including the first
-    // directory segment that contains the actual spec files.
-    // Strategy: the video mirrors the path after the spec root.
-    // Cypress default: spec "cypress/e2e/foo/bar.cy.ts" → video "cypress/videos/foo/bar.cy.ts.mp4"
-    // The spec root is "cypress/e2e/" — we strip that and prepend videoDir.
-    // Try common spec roots in order
-    const specRoots = [
+function collectVideoFiles(videoDir) {
+    const videos = new Map();
+    if (!fs.existsSync(videoDir)) {
+        coreExports.warning(`Video directory does not exist: ${videoDir}`);
+        return videos;
+    }
+    function walk(dir) {
+        for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+            const fullPath = require$$1.join(dir, entry.name);
+            if (entry.isDirectory()) {
+                walk(fullPath);
+            }
+            else if (entry.name.endsWith('.mp4')) {
+                // Key: relative to videoDir, without .mp4 extension
+                const relative = require$$1.relative(videoDir, fullPath);
+                const specName = relative.slice(0, -4); // strip ".mp4"
+                videos.set(specName, fullPath);
+            }
+        }
+    }
+    walk(videoDir);
+    return videos;
+}
+/**
+ * Given a spec path like "cypress/e2e/auth/login.cy.ts", extract the part
+ * that Cypress uses for the video filename: "auth/login.cy.ts".
+ *
+ * Cypress strips the common ancestor of all spec files. In practice, this is
+ * the specPattern root (e.g. "cypress/e2e/"). We try known roots, then fall
+ * back to using just the basename segments.
+ */
+function specToRelativeName(specPath) {
+    const knownRoots = [
         'cypress/e2e/',
         'cypress/integration/',
         'src/',
         'tests/',
         'test/'
     ];
-    for (const root of specRoots) {
+    for (const root of knownRoots) {
         if (specPath.startsWith(root)) {
-            const relative = specPath.slice(root.length);
-            return require$$1$1.join(videoDir, `${relative}.mp4`);
+            return specPath.slice(root.length);
         }
     }
-    // Fallback: use the full spec path relative to videoDir
-    return require$$1$1.join(videoDir, `${specPath}.mp4`);
+    // Fallback: use the full path (Cypress may do this for non-standard layouts)
+    return specPath;
 }
-async function runWithConcurrency(items, maxConcurrent, fn) {
-    const results = [];
-    let index = 0;
-    async function worker() {
-        while (index < items.length) {
-            const i = index++;
-            results[i] = await fn(items[i]);
-        }
-    }
-    const workers = Array.from({ length: Math.min(maxConcurrent, items.length) }, () => worker());
-    await Promise.all(workers);
-    return results;
-}
+/**
+ * Match changed spec files to video files on disk, upload matches to R2,
+ * and return signed URLs.
+ */
 async function uploadVideos(specs, config) {
     const client = createS3Client(config);
-    const results = [];
-    // Map specs to video files that exist on disk
-    const specsWithVideos = [];
-    for (const spec of specs) {
-        const videoPath = specToVideoPath(spec.path, config.videoDir);
-        if (require$$1.existsSync(videoPath)) {
-            specsWithVideos.push({ spec, videoPath });
-        }
-        else {
-            coreExports.warning(`No video found for ${spec.path} (expected ${videoPath})`);
-        }
-    }
-    if (specsWithVideos.length === 0) {
-        coreExports.info('No video files found on disk for changed specs.');
+    const videoMap = collectVideoFiles(config.videoDir);
+    if (videoMap.size === 0) {
+        coreExports.info(`No .mp4 files found in ${config.videoDir}. ` +
+            'Ensure Cypress video recording is enabled.');
         return [];
     }
-    const uploaded = await runWithConcurrency(specsWithVideos, config.maxConcurrent, async ({ spec, videoPath }) => {
-        const relative = specToVideoPath(spec.path, '').replace(/^\//, '');
-        const key = `cypress/${config.owner}/${config.repo}/pr-${config.prNumber}/${relative}`;
+    coreExports.info(`Found ${videoMap.size} video file(s) in ${config.videoDir}`);
+    // Match specs to videos
+    const matched = [];
+    for (const spec of specs) {
+        const relativeName = specToRelativeName(spec.path);
+        if (videoMap.has(relativeName)) {
+            matched.push({
+                spec,
+                videoPath: videoMap.get(relativeName),
+                videoKey: relativeName
+            });
+        }
+        else {
+            coreExports.warning(`No video found for ${spec.path} (looked for "${relativeName}" in ${config.videoDir})`);
+        }
+    }
+    if (matched.length === 0) {
+        return [];
+    }
+    const uploaded = await runWithConcurrency(matched, config.maxConcurrent, async ({ spec, videoPath, videoKey }) => {
+        const key = `cypress/${config.owner}/${config.repo}/pr-${config.prNumber}/${videoKey}.mp4`;
         try {
-            const body = require$$1.readFileSync(videoPath);
+            const body = fs.createReadStream(videoPath);
             await client.send(new PutObjectCommand({
                 Bucket: config.bucket,
                 Key: key,
@@ -76281,10 +76306,19 @@ async function uploadVideos(specs, config) {
             return null;
         }
     });
-    for (const r of uploaded) {
-        if (r)
-            results.push(r);
+    return uploaded.filter((r) => r !== null);
+}
+async function runWithConcurrency(items, maxConcurrent, fn) {
+    const results = [];
+    let index = 0;
+    async function worker() {
+        while (index < items.length) {
+            const i = index++;
+            results[i] = await fn(items[i]);
+        }
     }
+    const workers = Array.from({ length: Math.min(maxConcurrent, items.length) }, () => worker());
+    await Promise.all(workers);
     return results;
 }
 
@@ -76292,9 +76326,8 @@ const COMMENT_MARKER = '<!-- cypress-pr-videos -->';
 function buildCommentBody(header, results, expirySeconds) {
     const expiryHours = Math.round(expirySeconds / 3600);
     const rows = results
-        .map(r => {
-        // Show just the relative spec name
-        const specName = r.spec.replace(/^cypress\/e2e\//, '');
+        .map((r) => {
+        const specName = specToRelativeName(r.spec);
         return `| \`${specName}\` | [▶️ Watch](${r.url}) |`;
     })
         .join('\n');
@@ -76319,14 +76352,24 @@ async function postOrUpdateComment(token, results, header, expirySeconds) {
     }
     const body = buildCommentBody(header, results, expirySeconds);
     try {
-        // Search for existing comment
-        const { data: comments } = await octokit.rest.issues.listComments({
-            owner,
-            repo,
-            issue_number: prNumber,
-            per_page: 100
-        });
-        const existing = comments.find(c => c.body?.includes(COMMENT_MARKER) ?? false);
+        // Search for existing comment, paginating through all comments
+        let existing;
+        let page = 1;
+        while (!existing) {
+            const { data: comments } = await octokit.rest.issues.listComments({
+                owner,
+                repo,
+                issue_number: prNumber,
+                per_page: 100,
+                page
+            });
+            if (comments.length === 0)
+                break;
+            existing = comments.find((c) => c.body?.includes(COMMENT_MARKER) ?? false);
+            if (comments.length < 100)
+                break;
+            page++;
+        }
         if (existing) {
             await octokit.rest.issues.updateComment({
                 owner,
@@ -76353,7 +76396,6 @@ async function postOrUpdateComment(token, results, header, expirySeconds) {
 
 async function run() {
     try {
-        // Check for fork PR
         const pr = context.payload.pull_request;
         if (!pr) {
             coreExports.info('Not a pull_request event. Skipping.');
@@ -76363,7 +76405,6 @@ async function run() {
             coreExports.info('Skipping: fork PRs not supported.');
             return;
         }
-        // Read inputs
         const token = coreExports.getInput('github-token', { required: true });
         const specPattern = coreExports.getInput('spec-pattern');
         const videoDir = coreExports.getInput('video-dir');
@@ -76395,7 +76436,7 @@ async function run() {
         // Step 2: Upload matching videos
         const results = await uploadVideos(specs, r2Config);
         if (results.length === 0) {
-            coreExports.info('No videos found on disk for changed specs, skipping.');
+            coreExports.info('No matching videos found on disk for changed specs, skipping.');
             coreExports.setOutput('video-urls', '[]');
             coreExports.setOutput('videos-uploaded', '0');
             return;
@@ -76408,8 +76449,8 @@ async function run() {
         coreExports.info(`Successfully uploaded ${results.length} video(s) and posted PR comment.`);
     }
     catch (error) {
-        if (error instanceof Error)
-            coreExports.setFailed(error.message);
+        const message = error instanceof Error ? error.message : String(error ?? 'Unknown error');
+        coreExports.setFailed(message);
     }
 }
 
@@ -77191,7 +77232,7 @@ Set AWS_CONTAINER_CREDENTIALS_FULL_URI or AWS_CONTAINER_CREDENTIALS_RELATIVE_URI
             request.headers.Authorization = token;
         }
         else if (tokenFile) {
-            request.headers.Authorization = (await fs.readFile(tokenFile)).toString();
+            request.headers.Authorization = (await fs$1.readFile(tokenFile)).toString();
         }
         try {
             const result = await requestHandler.handle(request);
