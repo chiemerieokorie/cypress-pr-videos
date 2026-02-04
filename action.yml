@@ -44,6 +44,10 @@ inputs:
     description: Parallel upload limit
     required: false
     default: '5'
+  inline-videos:
+    description: Display videos inline in PR comment (true) or as links in a table (false)
+    required: false
+    default: 'true'
 
 outputs:
   video-urls:

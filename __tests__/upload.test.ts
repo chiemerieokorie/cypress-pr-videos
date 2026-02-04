@@ -54,32 +54,68 @@ describe('collectVideoFiles', () => {
   })
 })
 
-describe('specToRelativeName', () => {
-  it('strips cypress/e2e/ prefix', async () => {
-    const { specToRelativeName } = await import('../src/upload.js')
-    expect(specToRelativeName('cypress/e2e/auth/login.cy.ts')).toBe(
-      'auth/login.cy.ts'
-    )
+describe('findMatchingVideo', () => {
+  it('matches video by suffix for standard cypress layout', async () => {
+    const { findMatchingVideo } = await import('../src/upload.js')
+    const videoMap = new Map([
+      ['auth/login.cy.ts', '/videos/auth/login.cy.ts.mp4']
+    ])
+
+    const result = findMatchingVideo('cypress/e2e/auth/login.cy.ts', videoMap)
+    expect(result).toEqual({
+      videoKey: 'auth/login.cy.ts',
+      videoPath: '/videos/auth/login.cy.ts.mp4'
+    })
   })
 
-  it('strips cypress/integration/ prefix', async () => {
-    const { specToRelativeName } = await import('../src/upload.js')
-    expect(specToRelativeName('cypress/integration/auth/login.cy.ts')).toBe(
-      'auth/login.cy.ts'
+  it('matches video by suffix for monorepo layout', async () => {
+    const { findMatchingVideo } = await import('../src/upload.js')
+    const videoMap = new Map([
+      ['navigation.cy.ts', '/videos/navigation.cy.ts.mp4']
+    ])
+
+    const result = findMatchingVideo(
+      'apps/web/cypress/e2e/navigation.cy.ts',
+      videoMap
     )
+    expect(result).toEqual({
+      videoKey: 'navigation.cy.ts',
+      videoPath: '/videos/navigation.cy.ts.mp4'
+    })
   })
 
-  it('strips src/ prefix', async () => {
-    const { specToRelativeName } = await import('../src/upload.js')
-    expect(specToRelativeName('src/tests/login.cy.ts')).toBe(
-      'tests/login.cy.ts'
-    )
+  it('prefers longest (most specific) match', async () => {
+    const { findMatchingVideo } = await import('../src/upload.js')
+    const videoMap = new Map([
+      ['login.cy.ts', '/videos/login.cy.ts.mp4'],
+      ['auth/login.cy.ts', '/videos/auth/login.cy.ts.mp4']
+    ])
+
+    const result = findMatchingVideo('cypress/e2e/auth/login.cy.ts', videoMap)
+    expect(result).toEqual({
+      videoKey: 'auth/login.cy.ts',
+      videoPath: '/videos/auth/login.cy.ts.mp4'
+    })
   })
 
-  it('returns full path when no known root matches', async () => {
-    const { specToRelativeName } = await import('../src/upload.js')
-    expect(specToRelativeName('custom/dir/login.cy.ts')).toBe(
-      'custom/dir/login.cy.ts'
-    )
+  it('returns null when no match found', async () => {
+    const { findMatchingVideo } = await import('../src/upload.js')
+    const videoMap = new Map([['other.cy.ts', '/videos/other.cy.ts.mp4']])
+
+    const result = findMatchingVideo('cypress/e2e/auth/login.cy.ts', videoMap)
+    expect(result).toBeNull()
+  })
+
+  it('matches exact path', async () => {
+    const { findMatchingVideo } = await import('../src/upload.js')
+    const videoMap = new Map([
+      ['auth/login.cy.ts', '/videos/auth/login.cy.ts.mp4']
+    ])
+
+    const result = findMatchingVideo('auth/login.cy.ts', videoMap)
+    expect(result).toEqual({
+      videoKey: 'auth/login.cy.ts',
+      videoPath: '/videos/auth/login.cy.ts.mp4'
+    })
   })
 })

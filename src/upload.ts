@@ -72,30 +72,42 @@ export function collectVideoFiles(videoDir: string): Map<string, string> {
 }
 
 /**
- * Given a spec path like "cypress/e2e/auth/login.cy.ts", extract the part
- * that Cypress uses for the video filename: "auth/login.cy.ts".
+ * Find a matching video for a spec path using suffix matching.
  *
- * Cypress strips the common ancestor of all spec files. In practice, this is
- * the specPattern root (e.g. "cypress/e2e/"). We try known roots, then fall
- * back to using just the basename segments.
+ * This approach is robust across different project structures (monorepos, custom layouts)
+ * because it doesn't rely on hardcoded path prefixes. Instead, it checks if the spec path
+ * ends with the video's spec name.
+ *
+ * Example:
+ *   Spec: "apps/web/cypress/e2e/auth/login.cy.ts"
+ *   Video map entry: "auth/login.cy.ts" → "cypress/videos/auth/login.cy.ts.mp4"
+ *   Match: spec ends with "/auth/login.cy.ts" ✓
+ *
+ * If multiple videos match, the longest (most specific) match wins.
  */
-export function specToRelativeName(specPath: string): string {
-  const knownRoots = [
-    'cypress/e2e/',
-    'cypress/integration/',
-    'src/',
-    'tests/',
-    'test/'
-  ]
+export function findMatchingVideo(
+  specPath: string,
+  videoMap: Map<string, string>
+): { videoKey: string; videoPath: string } | null {
+  let bestMatch: { videoKey: string; videoPath: string } | null = null
+  let bestMatchLength = 0
 
-  for (const root of knownRoots) {
-    if (specPath.startsWith(root)) {
-      return specPath.slice(root.length)
+  for (const [videoKey, videoPath] of videoMap) {
+    // Check if spec path ends with the video key (with proper path boundary)
+    if (
+      specPath === videoKey ||
+      specPath.endsWith('/' + videoKey) ||
+      specPath.endsWith(path.sep + videoKey)
+    ) {
+      // Prefer the longest (most specific) match
+      if (videoKey.length > bestMatchLength) {
+        bestMatch = { videoKey, videoPath }
+        bestMatchLength = videoKey.length
+      }
     }
   }
 
-  // Fallback: use the full path (Cypress may do this for non-standard layouts)
-  return specPath
+  return bestMatch
 }
 
 /**
@@ -119,7 +131,7 @@ export async function uploadVideos(
 
   core.info(`Found ${videoMap.size} video file(s) in ${config.videoDir}`)
 
-  // Match specs to videos
+  // Match specs to videos using suffix matching
   const matched: Array<{
     spec: ChangedSpec
     videoPath: string
@@ -127,17 +139,18 @@ export async function uploadVideos(
   }> = []
 
   for (const spec of specs) {
-    const relativeName = specToRelativeName(spec.path)
+    const match = findMatchingVideo(spec.path, videoMap)
 
-    if (videoMap.has(relativeName)) {
+    if (match) {
       matched.push({
         spec,
-        videoPath: videoMap.get(relativeName)!,
-        videoKey: relativeName
+        videoPath: match.videoPath,
+        videoKey: match.videoKey
       })
     } else {
+      const availableVideos = Array.from(videoMap.keys()).join(', ')
       core.warning(
-        `No video found for ${spec.path} (looked for "${relativeName}" in ${config.videoDir})`
+        `No video found for ${spec.path}. Available videos: [${availableVideos}]`
       )
     }
   }

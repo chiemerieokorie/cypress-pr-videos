@@ -24,6 +24,7 @@ export async function run(): Promise<void> {
     const commentHeader = core.getInput('comment-header')
     const urlExpirySeconds = parseInt(core.getInput('url-expiry-seconds'), 10)
     const maxConcurrent = parseInt(core.getInput('max-concurrent-uploads'), 10)
+    const inlineVideos = core.getInput('inline-videos') !== 'false'
 
     const r2Config: UploadConfig = {
       accountId: core.getInput('r2-account-id', { required: true }),
@@ -59,7 +60,13 @@ export async function run(): Promise<void> {
     }
 
     // Step 3: Post or update PR comment
-    await postOrUpdateComment(token, results, commentHeader, urlExpirySeconds)
+    await postOrUpdateComment(
+      token,
+      results,
+      commentHeader,
+      urlExpirySeconds,
+      inlineVideos
+    )
 
     // Step 4: Set outputs
     core.setOutput('video-urls', JSON.stringify(results))

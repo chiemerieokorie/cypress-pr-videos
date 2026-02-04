@@ -1,24 +1,59 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import type { UploadResult } from './upload.js'
-import { specToRelativeName } from './upload.js'
 
 export const COMMENT_MARKER = '<!-- cypress-pr-videos -->'
+
+/**
+ * Extract a display-friendly name from a spec path.
+ * Uses the last 2-3 path segments to provide context without being too verbose.
+ */
+function getDisplayName(specPath: string): string {
+  const parts = specPath.split('/')
+  // Take last 2 segments, or all if fewer
+  const relevant = parts.slice(-2)
+  return relevant.join('/')
+}
 
 export function buildCommentBody(
   header: string,
   results: UploadResult[],
-  expirySeconds: number
+  expirySeconds: number,
+  inlineVideos: boolean = true
 ): string {
   const expiryHours = Math.round(expirySeconds / 3600)
-  const rows = results
-    .map((r) => {
-      const specName = specToRelativeName(r.spec)
-      return `| \`${specName}\` | [▶️ Watch](${r.url}) |`
-    })
-    .join('\n')
 
-  return `${COMMENT_MARKER}
+  if (inlineVideos) {
+    // Inline video format - displays videos directly in the comment
+    const videos = results
+      .map((r) => {
+        const specName = getDisplayName(r.spec)
+        // Use details/summary for collapsible sections with inline video
+        return `<details open>
+<summary><strong>${specName}</strong></summary>
+
+${r.url}
+
+</details>`
+      })
+      .join('\n\n')
+
+    return `${COMMENT_MARKER}
+${header}
+
+${videos}
+
+> Videos expire ${expiryHours} hours after upload.`
+  } else {
+    // Table format with links (original behavior)
+    const rows = results
+      .map((r) => {
+        const specName = getDisplayName(r.spec)
+        return `| \`${specName}\` | [▶️ Watch](${r.url}) |`
+      })
+      .join('\n')
+
+    return `${COMMENT_MARKER}
 ${header}
 
 | Spec | Video |
@@ -26,13 +61,15 @@ ${header}
 ${rows}
 
 > Videos expire ${expiryHours} hours after upload.`
+  }
 }
 
 export async function postOrUpdateComment(
   token: string,
   results: UploadResult[],
   header: string,
-  expirySeconds: number
+  expirySeconds: number,
+  inlineVideos: boolean = true
 ): Promise<void> {
   if (results.length === 0) return
 
@@ -45,7 +82,7 @@ export async function postOrUpdateComment(
     return
   }
 
-  const body = buildCommentBody(header, results, expirySeconds)
+  const body = buildCommentBody(header, results, expirySeconds, inlineVideos)
 
   try {
     // Search for existing comment, paginating through all comments
