@@ -2,7 +2,7 @@ name: Cypress PR Videos
 description: >-
   Upload Cypress test videos for changed spec files to Cloudflare R2 and post a
   PR comment with signed playback URLs.
-author: org
+author: chiemerieokorie
 branding:
   icon: video
   color: green

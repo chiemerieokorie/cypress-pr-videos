@@ -6,27 +6,71 @@ Cloudflare R2 and posts a PR comment with signed playback URLs.
 ## How it works
 
 1. Detects which spec files were changed in the PR diff
-1. Matches those specs to video files in the Cypress videos directory
-1. Uploads matching videos to Cloudflare R2
-1. Posts (or updates) a single PR comment with signed, time-limited URLs
+2. Matches those specs to video files in the Cypress videos directory
+3. Uploads matching videos to Cloudflare R2
+4. Posts (or updates) a single PR comment with signed, time-limited URLs
 
 Only videos for specs touched in the PR are uploaded — not the entire test
 suite.
 
+## Prerequisites
+
+Before using this action, ensure:
+
+1. **Cypress video recording is enabled** in your `cypress.config.ts`:
+   ```ts
+   export default defineConfig({
+     e2e: {
+       video: true,
+     },
+   });
+   ```
+
+2. **Required permissions** are set on your job:
+   ```yaml
+   jobs:
+     e2e:
+       runs-on: ubuntu-latest
+       permissions:
+         contents: read
+         pull-requests: write  # Required for posting PR comments
+   ```
+
+3. **R2 secrets** are configured in your repository (see [R2 bucket setup](#r2-bucket-setup))
+
 ## Usage
+
+### Basic example
 
 ```yaml
 - name: Cypress run
   uses: cypress-io/github-action@v6
 
 - name: Post test videos
-  if: always()
-  uses: org/cypress-pr-videos@v1
+  if: always() && github.event_name == 'pull_request'
+  uses: chiemerieokorie/cypress-pr-videos@v1
   with:
     r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
     r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
     r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
     r2-bucket: ci-artifacts
+```
+
+### Monorepo example
+
+For monorepos, adjust `video-dir` and `spec-pattern` to match your project structure:
+
+```yaml
+- name: Post PR test videos
+  if: always() && github.event_name == 'pull_request'
+  uses: chiemerieokorie/cypress-pr-videos@v1
+  with:
+    r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
+    r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
+    r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+    r2-bucket: ${{ secrets.R2_BUCKET }}
+    video-dir: apps/web/cypress/videos
+    spec-pattern: 'apps/web/cypress/e2e/**/*.cy.{ts,js}'
 ```
 
 ## Inputs
@@ -78,11 +122,39 @@ To use the original table format with links instead, set `inline-videos: false`:
 
 ```yaml
 - name: Post test videos
-  uses: org/cypress-pr-videos@v1
+  uses: chiemerieokorie/cypress-pr-videos@v1
   with:
     inline-videos: false
     # ... other inputs
 ```
+
+## Troubleshooting
+
+### "Resource not accessible by integration" error
+
+The action can't post PR comments. Add the required permission to your job:
+
+```yaml
+permissions:
+  pull-requests: write
+```
+
+### No videos are uploaded
+
+1. **Check that video recording is enabled** in `cypress.config.ts`:
+   ```ts
+   video: true
+   ```
+
+2. **Verify the `video-dir` path** matches your project structure. For monorepos:
+   ```yaml
+   video-dir: apps/web/cypress/videos
+   ```
+
+3. **Check the `spec-pattern`** matches your spec file paths. For monorepos:
+   ```yaml
+   spec-pattern: 'apps/web/cypress/e2e/**/*.cy.{ts,js}'
+   ```
 
 ## Development
 
